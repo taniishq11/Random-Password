@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Random Password Gentrator</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: cursive;
+
+        box-sizing: border-box;
+      }
+
+      body {
+        background-color: black;
+        color: white;
+      }
+
+      .container {
+        width: 80%;
+        margin: 12%;
+        max-width: 700px;
+      }
+
+      .display {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #f5f1f143;
+        border-radius: 2rem;
+        width: 80%;
+        margin-bottom: 30px;
+        margin-top: 50px;
+        margin-bottom: 30px;
+        padding: 25px 20px;
+      }
+
+      .container h1 {
+        font-weight: 500;
+        font-size: 45px;
+      }
+
+      .container h1 span {
+        color: #07b84e;
+        border-bottom: 4px solid #07b84e;
+
+        padding-bottom: 7px;
+      }
+
+      #gen {
+        color: rgba(240, 248, 255, 0.356);
+        border: 0px;
+        margin-bottom: 10px;
+      }
+
+      .display img {
+        width: 25px;
+        cursor: pointer;
+        opacity: 1;
+      }
+
+      .display input {
+        width: 200px;
+        border-radius: 10px;
+        padding: 3px;
+        padding-left: 8px;
+        border: 0;
+        font-size: 20px;
+        background-color: rgba(206, 212, 218, 0.918);
+      }
+
+      .container button img {
+        width: 15px;
+        margin: 2px;
+      }
+
+      .container button {
+        color: #07b84e;
+        padding: 2px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: black;
+        font-size: large;
+        border: 0;
+        opacity: 1;
+      }
+
+      .container button:hover {
+        color: #b97a1b;
+        cursor: pointer;
+        border-bottom: 3px solid #b97a1b;
+      }
+      #reset {
+        padding: 6px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>
+        <span id="gen">Gentrate a</span><br /><span>Random Password</span>
+      </h1>
+      <div class="display">
+        <input type="text" id="Password" placeholder="Click ⇩" />
+        <img src="images/copy.png" onclick="copy()" />
+      </div>
+
+      <button onclick="createPassword()">
+        <img src="images/generate.png" /> Gentrate Password
+      </button>
+      <br />
+      <button id="reset" onclick="Reset">reset</button>
+    </div>
+  </body>
+
+  <script>
+    const PasswordBox = document.getElementById("Password");
+    const length = 8;
+
+    const upperCase = " ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const lowerCase = "abcdefghijklmnopqrstuvwxyz";
+    const numbers = "0123456789";
+    const symbol = "!@#$%^&*()_+-={}:<>?";
+
+    const allchars = upperCase + lowerCase + numbers + symbol;
+
+    function createPassword() {
+      let password = "";
+      password += upperCase[Math.floor(Math.random() * upperCase.length)];
+
+      password += lowerCase[Math.floor(Math.random() * lowerCase.length)];
+      password += numbers[Math.floor(Math.random() * numbers.length)];
+      password += symbol[Math.floor(Math.random() * symbol.length)];
+
+      while (length > password.length) {
+        password += allchars[Math.floor(Math.random() * allchars.length)];
+      }
+      PasswordBox.value = password;
+    }
+
+    function copy() {
+      PasswordBox.select();
+      document.execCommand("copy");
+
+      const copied = document.createElement("span");
+      copied.innerHTML = "copied";
+      document.querySelector(".display").appendChild(copied);
+
+      const copyImg = document.querySelector(".display img");
+      copyImg.style.display = "none";
+
+      setTimeout(() => {
+        copied.remove();
+        copyImg.style.display = "block";
+      }, 3000);
+    }
+
+    function Reset() {
+      document.querySelector("#reset");
+      PasswordBox.value = "";
+    }
+  </script>
+</html>
